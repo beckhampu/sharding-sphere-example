@@ -17,8 +17,10 @@
 
 package io.shardingsphere.example.jdbc.main.nodep.yaml;
 
-import io.shardingsphere.core.api.yaml.YamlMasterSlaveDataSourceFactory;
-import io.shardingsphere.example.jdbc.fixture.DataRepository;
+import io.shardingsphere.example.repository.jdbc.repository.RawOrderItemRepository;
+import io.shardingsphere.example.repository.jdbc.repository.RawOrderRepository;
+import io.shardingsphere.example.repository.jdbc.service.RawDemoService;
+import io.shardingsphere.shardingjdbc.api.yaml.YamlMasterSlaveDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -30,7 +32,7 @@ public class MasterSlaveOnly {
     
     public static void main(final String[] args) throws Exception {
         DataSource dataSource = YamlMasterSlaveDataSourceFactory.createDataSource(getYamlFile());
-        new DataRepository(dataSource).demo();
+        new RawDemoService(new RawOrderRepository(dataSource), new RawOrderItemRepository(dataSource)).demo();
     }
     
     private static File getYamlFile() {
